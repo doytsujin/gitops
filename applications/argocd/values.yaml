@@ -11,7 +11,7 @@ argo-cd:
         thehomelab.tech/dnsprovider: carsonanderson-net
         thehomelab.tech/ip-address: internal
         thehomelab.tech/iplookup: aws
-      ingressClassName: "nginx"
+      ingressClassName: ""
       hosts:
         - argocd.carsonanderson.net
       paths:
