@@ -1,48 +1,49 @@
-server:
-  extraArgs:
-    - --insecure
-  ingress:
-    enabled: true
-    annotations: {}
-    ingressClassName: "nginx"
-    hosts:
-      - argocd.carsonanderson.net
-    paths:
-      - /
-    tls:
-      - secretName: argocd-tls
-        hosts:
-          - argocd.carsonanderson.net
-    https: true
-  configEnabled: true
-  config:
-    url: https://argocd.carsonanderson.net
-    application.instanceLabelKey: argocd.argoproj.io/instance
-    dex.config: |
-      logger:
-        level: debug
-        format: json
-      connectors:
-        - type: saml
-          id: okta
-          name: Okta
-          config:
-            ssoURL: https://dev-489668.okta.com/app/carsonisawesomedev489668_argocd_1/exk5238i2sL44XxCc357/sso/saml
-            caData: |
-              LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURwRENDQW95Z0F3SUJBZ0lHQVd6L0Qxc1ZNQTBHQ1NxR1NJYjNEUUVCQ3dVQU1JR1NNUXN3Q1FZRFZRUUdFd0pWVXpFVE1CRUcKQTFVRUNBd0tRMkZzYVdadmNtNXBZVEVXTUJRR0ExVUVCd3dOVTJGdUlFWnlZVzVqYVhOamJ6RU5NQXNHQTFVRUNnd0VUMnQwWVRFVQpNQklHQTFVRUN3d0xVMU5QVUhKdmRtbGtaWEl4RXpBUkJnTlZCQU1NQ21SbGRpMDBPRGsyTmpneEhEQWFCZ2txaGtpRzl3MEJDUUVXCkRXbHVabTlBYjJ0MFlTNWpiMjB3SGhjTk1Ua3dPVEExTURFek16VXlXaGNOTWprd09UQTFNREV6TkRVeVdqQ0JrakVMTUFrR0ExVUUKQmhNQ1ZWTXhFekFSQmdOVkJBZ01Da05oYkdsbWIzSnVhV0V4RmpBVUJnTlZCQWNNRFZOaGJpQkdjbUZ1WTJselkyOHhEVEFMQmdOVgpCQW9NQkU5cmRHRXhGREFTQmdOVkJBc01DMU5UVDFCeWIzWnBaR1Z5TVJNd0VRWURWUVFEREFwa1pYWXRORGc1TmpZNE1Sd3dHZ1lKCktvWklodmNOQVFrQkZnMXBibVp2UUc5cmRHRXVZMjl0TUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUEKaXI0M1lDU1dueXVjM000eFo0M1dEai91emhvTi9DZUlGVExEZDQ3NWZyOU03VlFackZleFlBdmpPSUI5SFNoOHphNzIvTE1uOUhPLwo3TjBaeUUzQjJuR1l4QVArUmg5REROUjlvbkdjWE54QlFxL3ZjMXNuemNIdk05aHZ1aE9PbS85eFkzRWlIeUIzQWlOV2VRaTFDNWt1Cko2ZWQxU3loWDNMcnRvc3JBU0JvSjdBcU03cjlCdTd3MHdrQUNMeVQrc2dRa1dVVGQvaW1WTVk4RkJCekt5cmRlUDY1b0ptWHowY2MKazZyOHdSR3ZaVjJDdDBzemZMUlVPQXhzbTJ6ZE5QWUZKeVpsaDE0dDlMSERNTS83Q1lsUUJEdXliSDZmTUh2MFZYTFNQblR0Qi9UawpWblEybG5EMUdqTEJSaEFmL1pMQTZDMlR4cFFSb1ZPdjViSmNrUUlEQVFBQk1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQUhUWlZOCkM2NW9ScEFCVWhOZFpPb3BKZjBUVkZJZ282dmdVeEdRb3dNYk5yTXVWMDNUK1pyNkpwT25JOE9oL0hLL3dzMUVKNi95bWUwaFQ1QjQKb3lwemFvRkhaaTJCWnd4d1dmbjR4YlhXL0dIQ0tmaE81VEdNZ1R1R0RUNFZDOVRobzVSYWt2MkhrMXBHdEpiWjBOL2RXVkFwVmNEWQpzL0tRZWxuaElEamJ3aHN4d0wzVTBrbzJoU2lMSXVUM2RoZ0VpMGRleUZwUnBpUFo3SnZMNm5yd0VHZG96dGFiK3dHcTVmdzRsSTgvCjNISW5WK1hpTWVUdXhBL3JKeXdDK3VsbzViL0FNUHZzdUN5a2FJU0R1NXAyUlFwWHFaWjFUQTBPa2dzZTEwMjNBelh1eHowbDgvcTAKSkxua3JmSG9KOXlmTll4U2FxME1OazBSYnZ6TnFyUWsKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
-            redirectURI: https://argocd.carsonanderson.net/api/dex/callback
-            usernameAttr: email
-            emailAttr: email
-            groupsAttr: group
-      repositories: |
-        - url: git@github.com:rcanderson23/homelab
-          sshPrivateKeySecret:
-            name: github-deploy
-            key: sshPrivateKey
-        - url: https://charts.helm.sh/stable
-          name: stable
-  rbacConfig: 
-    scopes: '[email, groups]'
-    policy.csv: |
-      g, argocd-admin, role:admin
-  rbacConfigAnnotations: {}
+argo-cd:
+  server:
+    extraArgs:
+      - --insecure
+    ingress:
+      enabled: true
+      annotations: {}
+      ingressClassName: "nginx"
+      hosts:
+        - argocd.carsonanderson.net
+      paths:
+        - /
+      tls:
+        - secretName: argocd-tls
+          hosts:
+            - argocd.carsonanderson.net
+      https: true
+    configEnabled: true
+    config:
+      url: https://argocd.carsonanderson.net
+      application.instanceLabelKey: argocd.argoproj.io/instance
+      dex.config: |
+        logger:
+          level: debug
+          format: json
+        connectors:
+          - type: saml
+            id: okta
+            name: Okta
+            config:
+              ssoURL: https://dev-489668.okta.com/app/carsonisawesomedev489668_argocd_1/exk5238i2sL44XxCc357/sso/saml
+              caData: |
+                LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURwRENDQW95Z0F3SUJBZ0lHQVd6L0Qxc1ZNQTBHQ1NxR1NJYjNEUUVCQ3dVQU1JR1NNUXN3Q1FZRFZRUUdFd0pWVXpFVE1CRUcKQTFVRUNBd0tRMkZzYVdadmNtNXBZVEVXTUJRR0ExVUVCd3dOVTJGdUlFWnlZVzVqYVhOamJ6RU5NQXNHQTFVRUNnd0VUMnQwWVRFVQpNQklHQTFVRUN3d0xVMU5QVUhKdmRtbGtaWEl4RXpBUkJnTlZCQU1NQ21SbGRpMDBPRGsyTmpneEhEQWFCZ2txaGtpRzl3MEJDUUVXCkRXbHVabTlBYjJ0MFlTNWpiMjB3SGhjTk1Ua3dPVEExTURFek16VXlXaGNOTWprd09UQTFNREV6TkRVeVdqQ0JrakVMTUFrR0ExVUUKQmhNQ1ZWTXhFekFSQmdOVkJBZ01Da05oYkdsbWIzSnVhV0V4RmpBVUJnTlZCQWNNRFZOaGJpQkdjbUZ1WTJselkyOHhEVEFMQmdOVgpCQW9NQkU5cmRHRXhGREFTQmdOVkJBc01DMU5UVDFCeWIzWnBaR1Z5TVJNd0VRWURWUVFEREFwa1pYWXRORGc1TmpZNE1Sd3dHZ1lKCktvWklodmNOQVFrQkZnMXBibVp2UUc5cmRHRXVZMjl0TUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUEKaXI0M1lDU1dueXVjM000eFo0M1dEai91emhvTi9DZUlGVExEZDQ3NWZyOU03VlFackZleFlBdmpPSUI5SFNoOHphNzIvTE1uOUhPLwo3TjBaeUUzQjJuR1l4QVArUmg5REROUjlvbkdjWE54QlFxL3ZjMXNuemNIdk05aHZ1aE9PbS85eFkzRWlIeUIzQWlOV2VRaTFDNWt1Cko2ZWQxU3loWDNMcnRvc3JBU0JvSjdBcU03cjlCdTd3MHdrQUNMeVQrc2dRa1dVVGQvaW1WTVk4RkJCekt5cmRlUDY1b0ptWHowY2MKazZyOHdSR3ZaVjJDdDBzemZMUlVPQXhzbTJ6ZE5QWUZKeVpsaDE0dDlMSERNTS83Q1lsUUJEdXliSDZmTUh2MFZYTFNQblR0Qi9UawpWblEybG5EMUdqTEJSaEFmL1pMQTZDMlR4cFFSb1ZPdjViSmNrUUlEQVFBQk1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQUhUWlZOCkM2NW9ScEFCVWhOZFpPb3BKZjBUVkZJZ282dmdVeEdRb3dNYk5yTXVWMDNUK1pyNkpwT25JOE9oL0hLL3dzMUVKNi95bWUwaFQ1QjQKb3lwemFvRkhaaTJCWnd4d1dmbjR4YlhXL0dIQ0tmaE81VEdNZ1R1R0RUNFZDOVRobzVSYWt2MkhrMXBHdEpiWjBOL2RXVkFwVmNEWQpzL0tRZWxuaElEamJ3aHN4d0wzVTBrbzJoU2lMSXVUM2RoZ0VpMGRleUZwUnBpUFo3SnZMNm5yd0VHZG96dGFiK3dHcTVmdzRsSTgvCjNISW5WK1hpTWVUdXhBL3JKeXdDK3VsbzViL0FNUHZzdUN5a2FJU0R1NXAyUlFwWHFaWjFUQTBPa2dzZTEwMjNBelh1eHowbDgvcTAKSkxua3JmSG9KOXlmTll4U2FxME1OazBSYnZ6TnFyUWsKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+              redirectURI: https://argocd.carsonanderson.net/api/dex/callback
+              usernameAttr: email
+              emailAttr: email
+              groupsAttr: group
+        repositories: |
+          - url: git@github.com:rcanderson23/homelab
+            sshPrivateKeySecret:
+              name: github-deploy
+              key: sshPrivateKey
+          - url: https://charts.helm.sh/stable
+            name: stable
+    rbacConfig: 
+      scopes: '[email, groups]'
+      policy.csv: |
+        g, argocd-admin, role:admin
+    rbacConfigAnnotations: {}
