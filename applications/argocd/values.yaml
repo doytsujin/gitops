@@ -23,6 +23,11 @@ argo-cd:
       https: true
     configEnabled: true
     config:
+      resource.customizations.health.bitnami.com_SealedSecret: |
+        hs = {}
+        hs.status = "Healthy"
+        hs.message = "Controller doesn't report resource status"
+        return hs
       url: https://argocd.carsonanderson.net
       application.instanceLabelKey: argocd.argoproj.io/instance
       dex.config: |
