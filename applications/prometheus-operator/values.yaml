@@ -23,6 +23,9 @@ kube-prometheus-stack:
       enabled: true
       hosts: 
       - alertmanager.carsonanderson.net
+      paths:
+        - /
+      pathType: ImplementationSpecific
       tls: 
       - hosts:
         - alertmanager.carsonanderson.net
@@ -70,6 +73,9 @@ kube-prometheus-stack:
         thehomelab.tech/dnsprovider: carsonanderson-net-aws
       hosts: 
       - prometheus.carsonanderson.net
+      paths:
+        - /
+      pathType: ImplementationSpecific
       tls:
       - hosts:
         - prometheus.carsonanderson.net
