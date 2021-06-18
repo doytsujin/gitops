@@ -22,6 +22,7 @@ nzbget:
     config:
       enabled: true
       size: 1Gi
+      accessMode: ReadWriteOnce
     media:
       enabled: true
       mountPath: /media
@@ -30,3 +31,4 @@ nzbget:
       enabled: true
       mountPath: /downloads
       size: 150Gi
+      accessMode: ReadWriteOnce
