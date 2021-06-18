@@ -1,4 +1,6 @@
 nzbget:
+  securityContext:
+    fsGroup: 100
   ingress:
     main:
       enabled: true
