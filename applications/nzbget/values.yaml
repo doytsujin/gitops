@@ -1,5 +1,5 @@
 nzbget:
-  securityContext:
+  podSecurityContext:
     fsGroup: 100
   ingress:
     main:
