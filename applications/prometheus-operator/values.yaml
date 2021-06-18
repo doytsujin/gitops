@@ -10,6 +10,8 @@ kube-prometheus-stack:
     enabled: false
   kubeScheduler:
     enabled: false
+  kubeProxy: 
+    enabled: false
   alertmanager:
     enabled: true
     ingress:
