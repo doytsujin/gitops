@@ -1,4 +1,4 @@
-nzbget:
+radarr:
   podSecurityContext:
     fsGroup: 100
   ingress:
