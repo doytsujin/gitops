@@ -83,15 +83,6 @@ kube-prometheus-stack:
         - prometheus.carsonanderson.net
         secretName: prometheus-tls
     prometheusSpec:
-      remoteWrite:
-        - url: https://prometheus-prod-10-prod-us-central-0.grafana.net/api/prom/push
-          basicAuth:
-            username:
-              name: kubepromsecret
-              key: username
-            password:
-              name: kubepromsecret
-              key: password
       storageSpec:
         volumeClaimTemplate:
           spec:
