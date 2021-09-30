@@ -83,6 +83,7 @@ kube-prometheus-stack:
         - prometheus.carsonanderson.net
         secretName: prometheus-tls
     prometheusSpec:
+      enableAdminAPI: true
       enableFeatures:
         - remote-write-receiver
       storageSpec:
