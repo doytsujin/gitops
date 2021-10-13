@@ -84,6 +84,8 @@ kube-prometheus-stack:
         secretName: prometheus-tls
     prometheusSpec:
       enableAdminAPI: true
+      externalLabels:
+        cluster: homelab
       enableFeatures: []
       remoteWrite:
         - url: http://10.192.101.4/api/v1/write
